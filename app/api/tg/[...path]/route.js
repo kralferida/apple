@@ -1,9 +1,15 @@
-export const config = { runtime: 'edge' };
+export const runtime = 'edge';
 
-export default async function handler(req) {
+export async function GET(req, { params }) {
+  return proxy(req, params);
+}
+export async function POST(req, { params }) {
+  return proxy(req, params);
+}
+
+async function proxy(req, params) {
+  const tgPath = '/' + (await params).path.join('/');
   const url = new URL(req.url);
-  // /api/botXXX:YYY/sendMessage -> /botXXX:YYY/sendMessage
-  const tgPath = url.pathname.replace('/api', '');
   const tgUrl = `https://api.telegram.org${tgPath}${url.search}`;
 
   try {
@@ -12,7 +18,6 @@ export default async function handler(req) {
       headers: { 'Content-Type': req.headers.get('Content-Type') || 'application/json' },
       body: req.method !== 'GET' && req.method !== 'HEAD' ? await req.arrayBuffer() : undefined,
     });
-
     return new Response(await resp.arrayBuffer(), {
       status: resp.status,
       headers: {
