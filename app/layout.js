@@ -1,6 +1,9 @@
+import './globals.css';
+
 export const metadata = {
-  title: 'React Native Docs — Türkçe',
-  description: 'React Native geliştirici dokümantasyonu',
+  title: 'React Native · Türkçe Dokümantasyon',
+  description: 'React Native ile mobil uygulama geliştirme rehberi — Türkçe',
+  icons: { icon: 'https://reactnative.dev/img/favicon.ico' },
 };
 
 export default function RootLayout({ children }) {
